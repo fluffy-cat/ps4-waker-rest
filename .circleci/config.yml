@@ -1,12 +1,11 @@
 version: 2
 jobs:
   build:
-    docker:
-      - image: node:10.16.0-alpine
+    machine:
+      image: circleci/classic:201808-01
+      docker_layer_caching: true
     steps:
       - checkout
-      - setup_remote_docker:
-          docker_layer_caching: true
       - run:
           name: Build and push Docker image
           command: |
