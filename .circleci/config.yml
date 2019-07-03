@@ -7,8 +7,15 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Download qemu
+          command: >
+            mkdir build &&
+            wget https://github.com/multiarch/qemu-user-static/releases/download/v4.0.0-5/qemu-arm-static.tar.gz -O - |
+            tar -xzC build &&
+            chmod +x build/qemu-arm-static
+      - run:
           name: Build and push Docker image
           command: |
-            docker build -t fluffycat/ps4-waker-rest:latest .
+            docker build --platform armhf -t fluffycat/ps4-waker-rest:latest .
             echo $DOCKER_PWD | docker login -u $DOCKER_LOGIN --password-stdin
             docker push fluffycat/ps4-waker-rest:latest
