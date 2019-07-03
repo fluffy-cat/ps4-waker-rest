@@ -1,4 +1,4 @@
-FROM arm32v7/node:10.15.3-jessie
+FROM node:10.16.0-alpine
 
 COPY REST-wrapper /ps4waker-rest
 
