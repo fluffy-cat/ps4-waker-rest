@@ -20,7 +20,7 @@ jobs:
             sudo sh -c 'echo '\''{"experimental":true}'\'' > /etc/docker/daemon.json'
             sudo systemctl restart docker
 
-            docker build --platform armhf -t fluffycat/ps4-waker-rest:latest .
+            docker build --platform armhf --pull -t fluffycat/ps4-waker-rest:latest .
 
             # Push image to docker hub
             echo $DOCKER_PWD | docker login -u $DOCKER_LOGIN --password-stdin
