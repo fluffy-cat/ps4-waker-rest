@@ -16,6 +16,12 @@ jobs:
       - run:
           name: Build and push Docker image
           command: |
+            # Enable experimental features on docker
+            sudo sh -c 'echo '\''DOCKER_OPTS="--experimental=true"'\'' >> /etc/default/docker'
+            sudo service docker restart
+
             docker build --platform armhf -t fluffycat/ps4-waker-rest:latest .
+
+            # Push image to docker hub
             echo $DOCKER_PWD | docker login -u $DOCKER_LOGIN --password-stdin
             docker push fluffycat/ps4-waker-rest:latest
