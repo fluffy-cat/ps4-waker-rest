@@ -1,20 +1,15 @@
 FROM node:10.16.0-alpine
 
 COPY build/qemu-arm-static /usr/bin
-COPY REST-wrapper /ps4waker-rest
 
-RUN cd ps4waker-rest \
-    && npm config set unsafe-perm true \
-    && npm install -g . \
-    && npm config set unsafe-perm false \
-    && mkdir -p /waker/data
+WORKDIR /ps4waker-rest
+COPY REST-wrapper/* ./
 
-COPY run.sh /
-
-RUN chmod a+x /run.sh
+RUN npm config set unsafe-perm true && \
+    npm install -g . && \
+    npm config set unsafe-perm false && \
+    chmod +x run.sh
 
 VOLUME ["/waker/data"]
-
 EXPOSE 3031
-
-CMD [ "/run.sh" ]
+CMD ["run.sh"]
