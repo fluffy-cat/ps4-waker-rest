@@ -7,17 +7,13 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Enable experimental features on docker
+          name: Configure x86 agent for building arm images
           command: |
             sudo sh -c 'echo '\''{"experimental":true}'\'' > /etc/docker/daemon.json'
             sudo systemctl restart docker
-      - run:
-          name: Download qemu
-          command: >
-            mkdir build &&
-            wget https://github.com/multiarch/qemu-user-static/releases/download/v4.0.0-5/qemu-arm-static.tar.gz -O - |
-            tar -xzC build &&
-            chmod +x build/qemu-arm-static &&
+            mkdir build
+            wget https://github.com/multiarch/qemu-user-static/releases/download/v4.0.0-5/qemu-arm-static.tar.gz -O - | tar -xzC build
+            chmod +x build/qemu-arm-static
             docker run --rm --privileged multiarch/qemu-user-static:register --reset
       - run:
           name: Build and push Docker image
