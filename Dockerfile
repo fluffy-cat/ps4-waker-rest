@@ -10,6 +10,6 @@ RUN npm config set unsafe-perm true && \
     npm config set unsafe-perm false && \
     chmod +x run.sh
 
-VOLUME ["/waker/data"]
+VOLUME /waker/data
 EXPOSE 3031
-CMD ["/ps4waker-rest/run.sh"]
+CMD /ps4waker-rest/run.sh
